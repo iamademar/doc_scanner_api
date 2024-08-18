@@ -1,11 +1,13 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import Receipt
 from .serializers import ReceiptImageUploadSerializer
 
 class ReceiptImageUploadView(generics.CreateAPIView):
     queryset = Receipt.objects.all()
     serializer_class = ReceiptImageUploadSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
